@@ -60,6 +60,10 @@ def donchian_low(prices: pd.Series, period: int = 10) -> pd.Series:
     return prices.shift(1).rolling(period).min()
 
 
+def moving_average(prices: pd.Series, period: int) -> pd.Series:
+    return prices.rolling(period).mean()
+
+
 if __name__ == "__main__":
     df = pd.read_csv("data/ITC_NS.csv", parse_dates=["Date"])
     df = df.sort_values("Date").reset_index(drop=True)

@@ -15,7 +15,7 @@ _DATA_PATH = os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", DATA
 
 POSITION_SIZE = 1000    # Rs per trade
 MAX_POSITIONS = 5
-MAX_HOLD_DAYS = 5
+MAX_HOLD_DAYS_BY_STRATEGY = {"rsi": 5, "donchian": 10, "ma_cross": 30}
 STOP_LOSS_PCT = 0.05    # 5%
 COST_PCT      = 0.0015  # 0.15% per side
 SLIPPAGE_PCT  = 0.0005  # 0.05% per side
@@ -47,7 +47,7 @@ def load_all_data(strategy_fn=generate_signals) -> dict:
 # Backtest engine
 # ---------------------------------------------------------------------------
 
-def run_backtest(data: dict) -> list:
+def run_backtest(data: dict, max_hold_days: int = 5) -> list:
     """
     Simulate the RSI(2) + 200-MA strategy over historical daily data.
 
@@ -107,7 +107,7 @@ def run_backtest(data: dict) -> list:
                 if yest_signal == "SELL":
                     exit_price  = open_px * (1 - SLIPPAGE_PCT)
                     exit_reason = "SELL_signal"
-                elif pos["days_held"] >= MAX_HOLD_DAYS:
+                elif pos["days_held"] >= max_hold_days:
                     exit_price  = open_px * (1 - SLIPPAGE_PCT)
                     exit_reason = "max_hold"
 
@@ -342,15 +342,19 @@ def print_results(trades: list) -> None:
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser()
-    parser.add_argument("--strategy", choices=["rsi", "donchian"], default="rsi")
+    parser.add_argument("--strategy", choices=["rsi", "donchian", "ma_cross"], default="rsi")
     args = parser.parse_args()
 
     if args.strategy == "donchian":
         from strategy_donchian import generate_signals_donchian
         strategy_fn = generate_signals_donchian
+    elif args.strategy == "ma_cross":
+        from strategy_ma_cross import generate_signals_ma_cross
+        strategy_fn = generate_signals_ma_cross
     else:
         strategy_fn = generate_signals
 
-    data   = load_all_data(strategy_fn)
-    trades = run_backtest(data)
+    max_hold = MAX_HOLD_DAYS_BY_STRATEGY[args.strategy]
+    data     = load_all_data(strategy_fn)
+    trades   = run_backtest(data, max_hold_days=max_hold)
     print_results(trades)
