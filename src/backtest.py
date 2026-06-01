@@ -18,7 +18,7 @@ MAX_POSITIONS = 5
 MAX_HOLD_DAYS_BY_STRATEGY = {"rsi": 5, "donchian": 10, "ma_cross": 30}
 STOP_LOSS_PCT = 0.05    # 5%
 COST_PCT      = 0.0015  # 0.15% per side
-SLIPPAGE_PCT  = 0.0005  # 0.05% per side
+SLIPPAGE_PCT  = 0.003  # 0.3% per side (realistic for smallcaps)
 
 
 # ---------------------------------------------------------------------------

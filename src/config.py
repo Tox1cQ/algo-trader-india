@@ -1,28 +1,111 @@
 """
 config.py
 Central configuration for the algo-trader-india project.
-Keeps the watchlist and shared settings in one place.
 """
 
-# --- Starting universe ---
-# 2 ETFs (broad market anchors) + 6 affordable stocks
-# All NSE-listed, under ~₹600 so we can size positions on ₹5000 capital
+# Nifty Smallcap 100 universe (May 2026). About half are >Rs 1000;
+# those will auto-skip in the backtest. Survivorship bias documented in README.
 
 WATCHLIST = [
-    # ETFs
-    "NIFTYBEES.NS",   # Nifty 50 ETF — broad market
-    "GOLDBEES.NS",    # Gold ETF — diversifier, uncorrelated to stocks
-
-    # Stocks
-    "ITC.NS",         # FMCG / tobacco
-    "SBIN.NS",        # State Bank of India — banking
-    "ONGC.NS",        # Oil & Natural Gas Corp — energy/PSU
-    "COALINDIA.NS",   # Coal India — mining/PSU
-    "WIPRO.NS",       # Wipro — IT
-    "TATAPOWER.NS",   # Tata Power — power utility
+    "MEESHO.NS",
+    "IDBI.NS",
+    "HINDCOPPER.NS",
+    "PEL.NS",
+    "ASTERDM.NS",
+    "NH.NS",
+    "GLAND.NS",
+    "NAVINFLUOR.NS",
+    "SONACOMS.NS",
+    "POONAWALLA.NS",
+    "WELCORP.NS",
+    "DELHIVERY.NS",
+    "PHYSICSWALA.NS",
+    "BANDHANBNK.NS",
+    "ANGELONE.NS",
+    "CHOLAHLDNG.NS",
+    "STARHEALTH.NS",
+    "HSCL.NS",
+    "GRSE.NS",
+    "ANANDRATHI.NS",
+    "ITI.NS",
+    "TATATECH.NS",
+    "PNBHOUSING.NS",
+    "KARURVYSYA.NS",
+    "IKS.NS",
+    "MANAPPURAM.NS",
+    "WOCKPHARMA.NS",
+    "NUVAMA.NS",
+    "LALPATHLAB.NS",
+    "MRPL.NS",
+    "FORCEMOT.NS",
+    "NBCC.NS",
+    "AMBER.NS",
+    "CDSL.NS",
+    "AEGISLOG.NS",
+    "TENNECO.NS",
+    "CESC.NS",
+    "SAILIFE.NS",
+    "PPLPHARMA.NS",
+    "GESHIP.NS",
+    "IGL.NS",
+    "DATAPATTNS.NS",
+    "HBLENGINE.NS",
+    "KAYNES.NS",
+    "GMDCLTD.NS",
+    "TRITURBINE.NS",
+    "NETWEB.NS",
+    "NEULANDLAB.NS",
+    "RBLBANK.NS",
+    "NATCOPHARM.NS",
+    "RAMCOCEM.NS",
+    "AFFLE.NS",
+    "CREDITACC.NS",
+    "IIFL.NS",
+    "TATACHEM.NS",
+    "FSL.NS",
+    "SAGILITY.NS",
+    "GPIL.NS",
+    "CAMS.NS",
+    "CHAMBLFERT.NS",
+    "URBANCOMP.NS",
+    "CUB.NS",
+    "SYNGENE.NS",
+    "SARDAEN.NS",
+    "CROMPTON.NS",
+    "CAPRIGLOB.NS",
+    "DEEPAKFERT.NS",
+    "CASTROLIND.NS",
+    "ANANTRAJ.NS",
+    "JSWCEMENT.NS",
+    "AARTIIND.NS",
+    "REDINGTON.NS",
+    "IFCI.NS",
+    "INOXWIND.NS",
+    "COHANCE.NS",
+    "OLAELEC.NS",
+    "BRIGADE.NS",
+    "PINELABS.NS",
+    "BEML.NS",
+    "JBMA.NS",
+    "JYOTICNC.NS",
+    "KFINTECH.NS",
+    "DEVYANI.NS",
+    "FIVESTAR.NS",
+    "PGEL.NS",
+    "KEC.NS",
+    "IRCON.NS",
+    "APTUS.NS",
+    "JMFINANCIL.NS",
+    "BRAINBEES.NS",
+    "AFCONS.NS",
+    "SIGNATURE.NS",
+    "ZENSARTECH.NS",
+    "RPOWER.NS",
+    "BLS.NS",
+    "WHIRLPOOL.NS",
+    "SWANENERGY.NS",
 ]
 
-# --- Data settings ---
-PERIOD = "5y"        # 1 year of history (enough for 200-day MA filter)
-INTERVAL = "1d"       # daily candles
-DATA_DIR = "data"     # where CSVs are saved
+PERIOD = "5y"
+INTERVAL = "1d"
+DATA_DIR = "data"
