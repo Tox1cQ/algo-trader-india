@@ -23,6 +23,6 @@ WATCHLIST = [
 ]
 
 # --- Data settings ---
-PERIOD = "1y"        # 1 year of history (enough for 200-day MA filter)
+PERIOD = "5y"        # 1 year of history (enough for 200-day MA filter)
 INTERVAL = "1d"       # daily candles
 DATA_DIR = "data"     # where CSVs are saved
