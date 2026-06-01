@@ -3,6 +3,7 @@ import sys
 
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 
+import argparse
 import math
 
 import pandas as pd
@@ -24,7 +25,7 @@ SLIPPAGE_PCT  = 0.0005  # 0.05% per side
 # Data loading
 # ---------------------------------------------------------------------------
 
-def load_all_data() -> dict:
+def load_all_data(strategy_fn=generate_signals) -> dict:
     data = {}
     for ticker in WATCHLIST:
         filename = ticker.replace(".", "_") + ".csv"
@@ -37,7 +38,7 @@ def load_all_data() -> dict:
         # Strip tz without UTC conversion: 2025-05-29 00:00:00+05:30 -> 2025-05-29 00:00:00
         if df["Date"].dt.tz is not None:
             df["Date"] = df["Date"].apply(lambda ts: ts.replace(tzinfo=None))
-        df = generate_signals(df)
+        df = strategy_fn(df)
         data[ticker] = df
     return data
 
@@ -340,6 +341,16 @@ def print_results(trades: list) -> None:
 # ---------------------------------------------------------------------------
 
 if __name__ == "__main__":
-    data   = load_all_data()
+    parser = argparse.ArgumentParser()
+    parser.add_argument("--strategy", choices=["rsi", "donchian"], default="rsi")
+    args = parser.parse_args()
+
+    if args.strategy == "donchian":
+        from strategy_donchian import generate_signals_donchian
+        strategy_fn = generate_signals_donchian
+    else:
+        strategy_fn = generate_signals
+
+    data   = load_all_data(strategy_fn)
     trades = run_backtest(data)
     print_results(trades)

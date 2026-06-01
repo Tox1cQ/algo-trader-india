@@ -52,6 +52,14 @@ def rsi(prices: pd.Series, period: int = 14) -> pd.Series:
     return rsi_values
 
 
+def donchian_high(prices: pd.Series, period: int = 20) -> pd.Series:
+    return prices.shift(1).rolling(period).max()
+
+
+def donchian_low(prices: pd.Series, period: int = 10) -> pd.Series:
+    return prices.shift(1).rolling(period).min()
+
+
 if __name__ == "__main__":
     df = pd.read_csv("data/ITC_NS.csv", parse_dates=["Date"])
     df = df.sort_values("Date").reset_index(drop=True)
