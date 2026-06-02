@@ -15,10 +15,10 @@ _DATA_PATH = os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", DATA
 
 POSITION_SIZE = 1000    # Rs per trade
 MAX_POSITIONS = 5
-MAX_HOLD_DAYS_BY_STRATEGY = {"rsi": 5, "donchian": 10, "ma_cross": 30}
+MAX_HOLD_DAYS_BY_STRATEGY = {"rsi": 5, "donchian": 10, "ma_cross": 30, "rsi_v2": 5}
 STOP_LOSS_PCT = 0.05    # 5%
 COST_PCT      = 0.0015  # 0.15% per side
-SLIPPAGE_PCT  = 0.003  # 0.3% per side (realistic for smallcaps)
+SLIPPAGE_PCT  = 0.0005  # 0.05% per side (liquid largecaps)
 
 
 # ---------------------------------------------------------------------------
@@ -342,7 +342,7 @@ def print_results(trades: list) -> None:
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser()
-    parser.add_argument("--strategy", choices=["rsi", "donchian", "ma_cross"], default="rsi")
+    parser.add_argument("--strategy", choices=["rsi", "donchian", "ma_cross", "rsi_v2"], default="rsi")
     args = parser.parse_args()
 
     if args.strategy == "donchian":
@@ -351,6 +351,9 @@ if __name__ == "__main__":
     elif args.strategy == "ma_cross":
         from strategy_ma_cross import generate_signals_ma_cross
         strategy_fn = generate_signals_ma_cross
+    elif args.strategy == "rsi_v2":
+        from strategy_rsi_v2 import generate_signals_rsi_v2
+        strategy_fn = generate_signals_rsi_v2
     else:
         strategy_fn = generate_signals
 
